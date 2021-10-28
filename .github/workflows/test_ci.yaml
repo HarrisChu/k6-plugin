@@ -1,0 +1,22 @@
+name: test-ci
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    name: package and upload release assets
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v1
+        with:
+          go-version: 1.16.4
+
+      - name: build
+        env:
+          CGO_ENABLED: 0
+        run: |
+          make build-dev
+          ls -lh k6*
